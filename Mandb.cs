@@ -138,8 +138,12 @@ namespace grapeFruitRebuild
                     break;
 
                 case "rm":
-                    Console.WriteLine("Usage: rm <file path>");
-                    Console.WriteLine("Removes file");
+                    Console.WriteLine("Usage: rm <path>");
+                    Console.WriteLine("Removes file at path");
+                    Console.WriteLine("Can take arguments -r and -d");
+                    Console.WriteLine("- rm <path>: removes regular file at path");
+                    Console.WriteLine("- rm -d <path>: removes empty directory at path");
+                    Console.WriteLine("- rm -r <path>: removes directory recursively at path");
                     break;
 
                 //case "desktop":

@@ -1,10 +1,9 @@
 ﻿# TO-DO List // Roadmap
 
 ### High priority
-- Support for *REAL* FAT32 (hard drives) and ISO9660 (optical discs)
 - Use *""* in file paths ✅
-- Copy, move, delete commands (`cp`, `mv`, `rm`, including `rm -r`)
-	- `cp˙`, `mv` and `rm` works, but `rm` cannot do recursive delete ✅
+- Copy, move, delete commands (`cp`, `mv`, `rm`, `rm -r`, `rm -d`) ✅ 
+- Support for *REAL* FAT32 (hard drives) and ISO9660 (optical discs)
 - Networking tweaks
 
 ### Low priority, future plans

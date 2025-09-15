@@ -99,6 +99,8 @@ namespace grapeFruitRebuild
 
             #endregion
 
+            Globals.safeDelete = true;
+
             Logger.Log(1, "Set hostname to \"livecd\""); ;
             Globals.hostname = "livecd";
             Logger.Log(1, "Init done");

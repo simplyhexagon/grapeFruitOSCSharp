@@ -14,14 +14,14 @@ namespace grapeFruitRebuild
 
         public static void SpecifiedError(Exception e)
         {
-            Logger.Log(4, "Critical failure");
-            Console.WriteLine("A critical error occured");
-            Console.WriteLine("\nException message: " + e.Message);
-            Console.WriteLine("Exception ToString: " + e.ToString());
-            Console.WriteLine("\nSystem integrity might be compromised. Press a key to continue");
+            Console.WriteLine();
+            Logger.Log(4, "Critical Stop");
+            Console.WriteLine("A critical stop was triggered during execution!");
+            Console.WriteLine(e.ToString());
 
-            Logger.Debug("Exception message: " + e.Message + "\nException ToString: " + e.ToString());
+            Logger.Debug("Critical stop: " + e.ToString());
 
+            Console.WriteLine("\nSystem integrity might be compromised.\nPress a key to continue");
             Console.ReadKey();
         }
 

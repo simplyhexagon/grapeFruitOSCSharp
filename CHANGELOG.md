@@ -1,6 +1,18 @@
 ﻿# GrapeFruit OS - Powered by Cosmos
 ## Changelog
 
+### 2025-09-15
+- Added `env` to list environment variables and `envedit` to edit them
+- Added safe delete variable to system, asks Y/N before `rm` is run, can be toggled
+- `rm` can now take `-d` and `-r` parameters, see `whatis`
+- Reworked error screen
+- System can be toggled to compile for UEFI boot instead of legacy
+- Implemented functionality in regards to *"old pwd"*
+    - `cd $OLDPWD` or `cd -` takes you back to the previous PWD
+    - `oldpwd` env var gets updated on each `cd`
+- Worked on minor issues in regards to `ls` and `la`
+- Bumped version number to 0.15
+
 ### 2024-10-28
 - `nano` rework
 - Removed many `Logger.Debug` entries

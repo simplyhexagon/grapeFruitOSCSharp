@@ -1,8 +1,6 @@
 ﻿using Cosmos.System.FileSystem;
 using Cosmos.System.Network.Config;
-using grapeFruitRebuild.Filesystem;
 using System;
-//using grapeFruitOSCSharp.Filesystem;
 using System.Collections.Generic;
 
 namespace grapeFruitRebuild
@@ -90,6 +88,14 @@ namespace grapeFruitRebuild
                         Commands();
                     break;
 
+                case "env":
+                    Globals.env();
+                    break;
+
+                case "envedit":
+                    Globals.envEdit();
+                    break;
+
                 case "throwex":
                     throw new Exception("Manually triggered exception");
 
@@ -106,14 +112,14 @@ namespace grapeFruitRebuild
                     if (splitinput.Count > 1)
                         FS.List(splitinput[1]);
                     else
-                        FS.List();
+                        FS.List("");
                     break;
 
                 case "la":
                     if (splitinput.Count > 1)
                         FS.VerboseList(splitinput[1]);
                     else
-                        FS.VerboseList();
+                        FS.VerboseList("");
                     break;
 
                 case "cd":
@@ -182,7 +188,21 @@ namespace grapeFruitRebuild
 
                 case "rm":
                     if (splitinput.Count > 1)
-                        FS.Remove(splitinput[1]);
+                    {
+                        if (Globals.safeDelete)
+                        {
+                            if (Choice())
+                            {
+                                Console.Write('\n');
+                                FS.Remove(splitinput);
+                            }
+                            else
+                                return;
+
+                        }
+                        else
+                            FS.Remove(splitinput);
+                    }
                     else
                         Console.WriteLine("Not enough parameters");
                     break;
@@ -247,7 +267,8 @@ namespace grapeFruitRebuild
 
                 case "debug":
                     Console.WriteLine("throwex - throws test exception");
-                    //Console.WriteLine("keytest - test keyboard keycodes");
+                    Console.WriteLine("env - Lists environment variables");
+                    Console.WriteLine("envedit  - Environment variable editor");
                     break;
             }
         }

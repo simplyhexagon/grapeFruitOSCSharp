@@ -14,7 +14,7 @@ namespace grapeFruitRebuild
 {
     public class Globals
     {
-        public const string build = "0.12 CosmosRolling-Rebuild";
+        public const string build = "0.15 Alpha";
         public const string osname = "grapeFruitOS";
         public const bool devBuild = true;
 
@@ -33,6 +33,7 @@ namespace grapeFruitRebuild
         public static string oldpwd;
 
         public static bool swapYZ;
+        public static bool safeDelete;
 
         public static void Printsysteminfo()
         {
@@ -55,6 +56,82 @@ namespace grapeFruitRebuild
                 realUsedPercent = usedpercent.ToString();
 
             Console.WriteLine($"Memory usage: {GCImplementation.GetUsedRAM()} / {GCImplementation.GetAvailableRAM() * 1048576} bytes ({realUsedPercent})");
+        }
+
+        public static void env()
+        {
+            Console.WriteLine("devbuild: " + Globals.devBuild);
+            Console.WriteLine("currentuser: " + Globals.currentuser);
+            Console.WriteLine("hostname: " + Globals.hostname);
+            Console.WriteLine("workingdir: " + Globals.workingdir);
+            Console.WriteLine("oldpwd: " + Globals.oldpwd);
+            Console.WriteLine("swapYZ: " + Globals.swapYZ);
+            Console.WriteLine("safeDelete: " + Globals.safeDelete);
+        }
+
+        public static void envEdit()
+        {
+            Console.Clear();
+            Console.WriteLine("Choose variable:\n");
+            Console.WriteLine("1. currentuser\n2. hostname\n3. workingdir\n4. oldpwd\n5. swapYZ\n6. safeDelete");
+            Console.WriteLine("\nUse the number row to choose");
+            Console.Write("> ");
+            string input = "";
+            switch (Console.ReadKey().Key)
+            {
+                case ConsoleKey.D1:
+                    Console.Clear();
+                    Console.WriteLine("Key: currentuser\nType: String\n\nCurrent Value: " + currentuser);
+                    Console.Write("New value: ");
+                    input = Console.ReadLine();
+                    if(input != "")
+                        currentuser = input;
+
+                    Console.WriteLine("currentuser was updated to " + currentuser);
+                    break;
+                case ConsoleKey.D2:
+                    Console.Clear();
+                    Console.WriteLine("Key: hostname\nType: String\n\nCurrent Value: " + hostname);
+                    Console.Write("New value: ");
+                    input = Console.ReadLine();
+                    if (input != "")
+                        hostname = input;
+
+                    Console.WriteLine("hostname was updated to " + hostname);
+                    break;
+                case ConsoleKey.D3:
+                    Console.Clear();
+                    Console.WriteLine("Key: workingdir\nType: String\n\nCurrent Value: " + workingdir);
+                    Console.Write("New value: ");
+                    input = Console.ReadLine();
+                    if (input != "")
+                        workingdir = input;
+
+                    Console.WriteLine("workingdir was updated to " + workingdir);
+                    break;
+                case ConsoleKey.D4:
+                    Console.Clear();
+                    Console.WriteLine("Key: oldpwd\nType: String\n\nCurrent Value: " + oldpwd);
+                    Console.Write("New value: ");
+                    input = Console.ReadLine();
+                    if (input != "")
+                        oldpwd = input;
+
+                    Console.WriteLine("oldpwd was updated to " + oldpwd);
+                    break;
+                case ConsoleKey.D5:
+                    Console.WriteLine("\nswapYZ was " + swapYZ);
+                    swapYZ = !swapYZ;
+                    Console.WriteLine("swapYZ is " + swapYZ);
+                    break;
+                case ConsoleKey.D6:
+                    Console.WriteLine("\nsafeDelete was " + safeDelete);
+                    safeDelete = !safeDelete;
+                    Console.WriteLine("safeDelete is " + safeDelete);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
