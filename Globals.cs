@@ -14,7 +14,7 @@ namespace grapeFruitRebuild
 {
     public class Globals
     {
-        public const string build = "0.15 Alpha";
+        public const string build = "0.16 Alpha";
         public const string osname = "grapeFruitOS";
         public const bool devBuild = true;
 
@@ -71,7 +71,6 @@ namespace grapeFruitRebuild
 
         public static void envEdit()
         {
-            Console.Clear();
             Console.WriteLine("Choose variable:\n");
             Console.WriteLine("1. currentuser\n2. hostname\n3. workingdir\n4. oldpwd\n5. swapYZ\n6. safeDelete");
             Console.WriteLine("\nUse the number row to choose");
@@ -80,7 +79,7 @@ namespace grapeFruitRebuild
             switch (Console.ReadKey().Key)
             {
                 case ConsoleKey.D1:
-                    Console.Clear();
+                    Console.WriteLine();
                     Console.WriteLine("Key: currentuser\nType: String\n\nCurrent Value: " + currentuser);
                     Console.Write("New value: ");
                     input = Console.ReadLine();
@@ -90,7 +89,7 @@ namespace grapeFruitRebuild
                     Console.WriteLine("currentuser was updated to " + currentuser);
                     break;
                 case ConsoleKey.D2:
-                    Console.Clear();
+                    Console.WriteLine();
                     Console.WriteLine("Key: hostname\nType: String\n\nCurrent Value: " + hostname);
                     Console.Write("New value: ");
                     input = Console.ReadLine();
@@ -100,7 +99,7 @@ namespace grapeFruitRebuild
                     Console.WriteLine("hostname was updated to " + hostname);
                     break;
                 case ConsoleKey.D3:
-                    Console.Clear();
+                    Console.WriteLine();
                     Console.WriteLine("Key: workingdir\nType: String\n\nCurrent Value: " + workingdir);
                     Console.Write("New value: ");
                     input = Console.ReadLine();
@@ -110,7 +109,7 @@ namespace grapeFruitRebuild
                     Console.WriteLine("workingdir was updated to " + workingdir);
                     break;
                 case ConsoleKey.D4:
-                    Console.Clear();
+                    Console.WriteLine();
                     Console.WriteLine("Key: oldpwd\nType: String\n\nCurrent Value: " + oldpwd);
                     Console.Write("New value: ");
                     input = Console.ReadLine();

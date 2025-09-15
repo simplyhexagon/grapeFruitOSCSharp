@@ -22,7 +22,6 @@ namespace grapeFruitRebuild
             else if (splitpwd.Length > 2)
                 Console.Write($"{splitpwd[splitpwd.Length - 2]}]> ");
 
-
             Console.ForegroundColor = ConsoleColor.White;
             string command = Console.ReadLine();
             ParseInput(command);
@@ -233,7 +232,7 @@ namespace grapeFruitRebuild
 
                 case "system":
                     Console.WriteLine("Available commands in \"system\" category:\n");
-                    Console.WriteLine("help/commands - shows command list");
+                    Console.WriteLine("help/commands <category> - shows command list in category");
                     Console.WriteLine("echo <message> - prints to screen");
                     Console.WriteLine("clear - clears screen");
                     Console.WriteLine("time - shows current time (RTC)");
@@ -255,9 +254,9 @@ namespace grapeFruitRebuild
                     Console.WriteLine("Available commands in \"fs\" category:\n");
                     Console.WriteLine("ls/dir - list directory contents");
                     Console.WriteLine("la - verbose listing of directory contents");
-                    Console.WriteLine("rm - remove file");
+                    Console.WriteLine("rm - remove file or directory (-d) recursively (-r)");
                     Console.WriteLine("touch <filename> - create empty file with specified name");
-                    Console.WriteLine("cat <filename> - print file contents");
+                    Console.WriteLine("cat <filename> - read file contents to screen");
                     Console.WriteLine("mkdir/md <name> - creates directory with name");
                     Console.WriteLine("copy/cp <source> <target> - copies file from source to target (if source exists)");
                     Console.WriteLine("move/mv <source> <target> - moves file from source to target (if source exists)");

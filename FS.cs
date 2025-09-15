@@ -260,13 +260,25 @@ namespace grapeFruitRebuild
                                 Console.WriteLine("FS.Chdir: Directory does not exist!");
                             break;
                         default:
+                            path = path.Contains(@":\") ? path : Globals.workingdir + path + '\\';
+
                             if (Directory.Exists(path))
                             {
                                 Globals.oldpwd = Globals.workingdir;
-                                Globals.workingdir = path.Contains(@":\") ? path : path + '\\';
+                                Globals.workingdir = path;
                             }
                             else
-                                Console.WriteLine("FS.Chdir: Directory does not exist!");
+                            {
+                                //Ensuring the user cannot go to invalid path
+                                Globals.oldpwd = Globals.workingdir;
+
+                                //Telling user about wrong path
+                                Console.Write("Directory ");
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.Write("\"" + path + "\"");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                Console.WriteLine(" not found!");
+                            }
                             break;
                     }
                 }

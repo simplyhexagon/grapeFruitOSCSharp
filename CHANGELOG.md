@@ -1,6 +1,14 @@
 ﻿# GrapeFruit OS - Powered by Cosmos
 ## Changelog
 
+### 2025-09-15 | 0.16
+- Minor fixes with TUI, displayed text
+- Updated a few help tips
+- Fixed a bug with `cd` which made it impossible to use relative paths
+- Changed a few `Console.Clear()` entries to `Console.WriteLine()` in `envedit` to see the entire workflow
+- Added `whatis` entries for `env` and `envedit`
+- Bumped vernum to 0.16
+
 ### 2025-09-15
 - Added `env` to list environment variables and `envedit` to edit them
 - Added safe delete variable to system, asks Y/N before `rm` is run, can be toggled

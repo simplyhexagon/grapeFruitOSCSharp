@@ -35,6 +35,16 @@ namespace grapeFruitRebuild
                     Console.WriteLine("Throws an exception to test current exception handling");
                     break;
 
+                case "env":
+                    Console.WriteLine("Usage: env");
+                    Console.WriteLine("Lists the environment variables and their values");
+                    break;
+
+                case "envedit":
+                    Console.WriteLine("Usage: envedit");
+                    Console.WriteLine("Starts the environment variable editor");
+                    break;
+
                 case "shutdown":
                     Console.WriteLine("Usage: shutdown");
                     Console.WriteLine("Shuts down the system (asks for confirmation)");

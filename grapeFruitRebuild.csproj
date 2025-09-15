@@ -20,7 +20,7 @@
         <RemoveBootDebugOutput>False</RemoveBootDebugOutput>
         <UseUEFI>True</UseUEFI>
         <DebugEnabled>True</DebugEnabled>
-        <Timeout>1</Timeout>
+        <Timeout></Timeout>
         <VMWareEdition>Player</VMWareEdition>
     </PropertyGroup>
 
