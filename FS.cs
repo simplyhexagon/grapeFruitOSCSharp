@@ -317,7 +317,10 @@ namespace grapeFruitRebuild
                     if (Directory.Exists(path) && Directory.GetDirectories(path) == Array.Empty<string>() && Directory.GetFiles(path) == Array.Empty<string>())
                         Directory.Delete(path, false);
                     else
+                    {
                         Console.WriteLine("FS.Remove: Directory not empty");
+                        return;
+                    }
 
                 }
                 if (args[1] == "-r")

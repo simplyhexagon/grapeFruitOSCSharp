@@ -10,3 +10,4 @@
 - Login system (store usernames and passwords on disk)
 - Proper installer for the system
 - Custom EFI bootloader
+- Make a custom `choice` function that can have either Y or N as the default action on Enter key
