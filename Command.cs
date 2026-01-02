@@ -291,20 +291,14 @@ namespace grapeFruitRebuild
 
         static void Shutdown()
         {
-            //choice
-            if (Choice())
-            {
+            if(Choice())
                 Cosmos.System.Power.Shutdown();
-            }
         }
 
         static void Reboot()
         {
-            //choice
-            if (Choice())
-            {
+            if(Choice())
                 Cosmos.System.Power.Reboot();
-            }
         }
 
         static bool Choice()

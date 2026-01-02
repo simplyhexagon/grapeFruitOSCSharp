@@ -7,6 +7,9 @@
 - Networking tweaks
 
 ### Low priority, future plans
+- Possible large shell rework
+	- Up and down arrow to browse command buffer
+	- `^C` interrupt
 - Login system (store usernames and passwords on disk)
 - Proper installer for the system
 - Custom EFI bootloader

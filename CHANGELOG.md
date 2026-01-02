@@ -1,6 +1,12 @@
 ﻿# GrapeFruit OS - Powered by Cosmos
 ## Changelog
 
+### 2026-01-02 | 0.16.1
+- Cleaned up the "mandb" a little
+    - every switch now sets 2 variables, instead of individual console writelines
+    - Help text formatting now follows Unix man page standards
+- Minor change in `la`, columns now have headers to describe which is which
+
 ### 2025-09-15 | 0.16
 - Minor fixes with TUI, displayed text
 - Updated a few help tips

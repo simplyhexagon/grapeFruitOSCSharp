@@ -14,7 +14,7 @@ namespace grapeFruitRebuild
 {
     public class Globals
     {
-        public const string build = "0.16 Alpha";
+        public const string build = "0.16.1 Alpha";
         public const string osname = "grapeFruitOS";
         public const bool devBuild = true;
 

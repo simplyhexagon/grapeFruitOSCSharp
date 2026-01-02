@@ -92,6 +92,7 @@ namespace grapeFruitRebuild
                 {
                     //string[] filePaths = Directory.GetFiles(path);
                     Console.WriteLine("\nVerbose listing of " + path);
+                    Console.WriteLine("\ntype\t\tname\tsize");
                     Console.ForegroundColor = ConsoleColor.Yellow;   
                     foreach (var d in Directory.GetDirectories(path))
                     {

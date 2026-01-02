@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 
 namespace grapeFruitRebuild
 {
@@ -6,103 +7,106 @@ namespace grapeFruitRebuild
     {
         public static void Man(string command)
         {
+            string usage = "";
+            string description = "";
+            bool valid = true;
+
             //"""""mandb"""""
             switch (command)
             {
                 case "echo":
-                    Console.WriteLine("Usage: echo <text>");
-                    Console.WriteLine("\"Echoes\" back text after the command");
+                    usage = "echo <input>";
+                    description = "\"Echoes\" back text after the command";
                     break;
 
                 case "clear":
-                    Console.WriteLine("Usage: clear");
-                    Console.WriteLine("Clears screen");
+                    usage = "clear";
+                    description = "Clears screen";
                     break;
 
                 case "time":
-                    Console.WriteLine("Usage: time");
-                    Console.WriteLine("Displays current time based on RTC");
+                    usage = "time";
+                    description = "Displays current time based on RTC";
                     break;
 
                 case "help":
                 case "commands":
-                    Console.WriteLine("Usage: help <or> commands");
-                    Console.WriteLine("Displays the list of currently available commands");
+                    usage = "{help | commands} [<group>]";
+                    description = "Displays information text for help categories OR\ndisplays commands of category";
                     break;
 
                 case "throwex":
-                    Console.WriteLine("Usage: throwex");
-                    Console.WriteLine("Throws an exception to test current exception handling");
+                    usage = "throwex";
+                    description = "Throws an exception to test current exception handling";
                     break;
 
                 case "env":
-                    Console.WriteLine("Usage: env");
-                    Console.WriteLine("Lists the environment variables and their values");
+                    usage = "env";
+                    description = "Lists the environment variables and their values";
                     break;
 
                 case "envedit":
-                    Console.WriteLine("Usage: envedit");
-                    Console.WriteLine("Starts the environment variable editor");
+                    usage = "envedit";
+                    description = "Starts the environment variable editor";  
                     break;
 
                 case "shutdown":
-                    Console.WriteLine("Usage: shutdown");
-                    Console.WriteLine("Shuts down the system (asks for confirmation)");
+                    usage = "shutdown";
+                    description = "Shuts down the system (asks for confirmation)";
                     break;
 
                 case "reboot":
-                    Console.WriteLine("Usage: reboot");
-                    Console.WriteLine("Reboots the system (asks for confirmation)");
+                    usage = "reboot";
+                    description = "Reboots the system (asks for confirmation)";
                     break;
 
                 case "ls":
                 case "dir":
-                    Console.WriteLine("Usage: ls/dir <or> ls/dir <path>");
-                    Console.WriteLine("Lists contents of current working directory or the contents of the specified path");
+                    usage = "{ls | dir} [<path>]";
+                    description = "Lists contents of current working directory OR\nthe contents of the specified path";
                     break;
 
                 case "la":
-                    Console.WriteLine("Usage: la <or> la <path>");
-                    Console.WriteLine("Outputs a verbose listing of the current working directory or of the specified path");
+                    usage = "la [<path>]";
+                    description = "Outputs verbose list of contents of current working directory OR the contents of the specified path";
                     break;
 
                 case "cd":
-                    Console.WriteLine("Usage: cd <path>");
-                    Console.WriteLine("Changes directory to specified path");
+                    usage = "cd [<path>]";
+                    description = "Changes directory to specified path OR\nif no parameter is set, changes directory to FS root";
                     break;
 
                 case "pwd":
-                    Console.WriteLine("Usage: pwd");
-                    Console.WriteLine("Prints current working directory");
+                    usage = "pwd";
+                    description = "Prints current working directory path";
                     break;
 
                 case "touch":
-                    Console.WriteLine("Usage: touch <filename>");
-                    Console.WriteLine("Creates empty file with the specified name");
+                    usage = "touch <path>";
+                    description = "Creates a null terminated empty file at specified path";
                     break;
 
                 case "cat":
-                    Console.WriteLine("Usage: cat <filename>");
-                    Console.WriteLine("List contents of file");
+                    usage = "cat <filename>";
+                    description = "Outputs contents of file";
                     break;
 
                 case "mkdir":
                 case "md":
-                    Console.WriteLine("Usage: mkdir/md <dirname>");
-                    Console.WriteLine("Creates a directory with the specified name");
-                    Console.WriteLine("If there are \\-s included, it will create a new directory at the path");
+                    usage = "{mkdir | md} <directory name>";
+                    description = "Creates a directory with the specified name OR\nif name has \\, it will be created at the specified path";
                     break;
 
                 case "copy":
                 case "cp":
-                    Console.WriteLine("Usage: copy/cp <source> <target>");
-                    Console.WriteLine("Copies a file to the specified target");
+                    usage = "{copy | cp} <source> <target>";
+                    description = "Copies source file to target path";
                     break;
 
                 case "move":
                 case "mv":
-                    Console.WriteLine("Usage: move/mv <source> <target>");
-                    Console.WriteLine("Moves a file to the specified target");
+                    usage = "{move | mv} <source> <target>";
+                    description = "Moves source file to target path";
                     break;
 
                 //case "gfdisk":
@@ -128,8 +132,8 @@ namespace grapeFruitRebuild
                 //    break;
 
                 case "whatis":
-                    Console.WriteLine("Usage: whatis <command>");
-                    Console.WriteLine("Information about command specified");
+                    usage = "whatis <command>";
+                    description = "Outputs information about specified command";
                     break;
 
                 //case "kblayout":
@@ -143,17 +147,13 @@ namespace grapeFruitRebuild
                 //    break;
 
                 case "nano":
-                    Console.WriteLine("Usage: nano // nano <file path>");
-                    Console.WriteLine("GrapeFruitNano file editor (similar to nano on *nix systems)");
+                    usage = "nano [<filepath>]";
+                    description = "Open GrapeFruitNano text editor with or without a file open";
                     break;
 
                 case "rm":
-                    Console.WriteLine("Usage: rm <path>");
-                    Console.WriteLine("Removes file at path");
-                    Console.WriteLine("Can take arguments -r and -d");
-                    Console.WriteLine("- rm <path>: removes regular file at path");
-                    Console.WriteLine("- rm -d <path>: removes empty directory at path");
-                    Console.WriteLine("- rm -r <path>: removes directory recursively at path");
+                    usage = "rm <path> [-r | -d]";
+                    description = "Remove file OR directory at specified path\n-r: delete directory recursively\n-d: delete directory if it's empty";
                     break;
 
                 //case "desktop":
@@ -167,9 +167,14 @@ namespace grapeFruitRebuild
                 //    break;
 
                 default:
-                    Console.WriteLine("Nothing appropriate");
+                    valid = false;
                     break;
             }
+
+            if (valid)
+                Console.WriteLine("Usage: " + usage + "\n" + description);
+            else
+                Console.WriteLine("Nothing appropriate");
         }
     }
 }
