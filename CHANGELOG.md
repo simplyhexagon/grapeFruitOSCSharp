@@ -1,6 +1,32 @@
 ﻿# GrapeFruit OS - Powered by Cosmos
 ## Changelog
 
+### 2026-01-02 | 0.16.1
+- Cleaned up the "mandb" a little
+    - every switch now sets 2 variables, instead of individual console writelines
+    - Help text formatting now follows Unix man page standards
+- Minor change in `la`, columns now have headers to describe which is which
+
+### 2025-09-15 | 0.16
+- Minor fixes with TUI, displayed text
+- Updated a few help tips
+- Fixed a bug with `cd` which made it impossible to use relative paths
+- Changed a few `Console.Clear()` entries to `Console.WriteLine()` in `envedit` to see the entire workflow
+- Added `whatis` entries for `env` and `envedit`
+- Bumped vernum to 0.16
+
+### 2025-09-15
+- Added `env` to list environment variables and `envedit` to edit them
+- Added safe delete variable to system, asks Y/N before `rm` is run, can be toggled
+- `rm` can now take `-d` and `-r` parameters, see `whatis`
+- Reworked error screen
+- System can be toggled to compile for UEFI boot instead of legacy
+- Implemented functionality in regards to *"old pwd"*
+    - `cd $OLDPWD` or `cd -` takes you back to the previous PWD
+    - `oldpwd` env var gets updated on each `cd`
+- Worked on minor issues in regards to `ls` and `la`
+- Bumped version number to 0.15
+
 ### 2024-10-28
 - `nano` rework
 - Removed many `Logger.Debug` entries

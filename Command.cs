@@ -1,8 +1,6 @@
 ﻿using Cosmos.System.FileSystem;
 using Cosmos.System.Network.Config;
-using grapeFruitRebuild.Filesystem;
 using System;
-//using grapeFruitOSCSharp.Filesystem;
 using System.Collections.Generic;
 
 namespace grapeFruitRebuild
@@ -23,7 +21,6 @@ namespace grapeFruitRebuild
                 Console.Write($"{Globals.workingdir}]> ");
             else if (splitpwd.Length > 2)
                 Console.Write($"{splitpwd[splitpwd.Length - 2]}]> ");
-
 
             Console.ForegroundColor = ConsoleColor.White;
             string command = Console.ReadLine();
@@ -90,6 +87,14 @@ namespace grapeFruitRebuild
                         Commands();
                     break;
 
+                case "env":
+                    Globals.env();
+                    break;
+
+                case "envedit":
+                    Globals.envEdit();
+                    break;
+
                 case "throwex":
                     throw new Exception("Manually triggered exception");
 
@@ -106,14 +111,14 @@ namespace grapeFruitRebuild
                     if (splitinput.Count > 1)
                         FS.List(splitinput[1]);
                     else
-                        FS.List();
+                        FS.List("");
                     break;
 
                 case "la":
                     if (splitinput.Count > 1)
                         FS.VerboseList(splitinput[1]);
                     else
-                        FS.VerboseList();
+                        FS.VerboseList("");
                     break;
 
                 case "cd":
@@ -182,7 +187,21 @@ namespace grapeFruitRebuild
 
                 case "rm":
                     if (splitinput.Count > 1)
-                        FS.Remove(splitinput[1]);
+                    {
+                        if (Globals.safeDelete)
+                        {
+                            if (Choice())
+                            {
+                                Console.Write('\n');
+                                FS.Remove(splitinput);
+                            }
+                            else
+                                return;
+
+                        }
+                        else
+                            FS.Remove(splitinput);
+                    }
                     else
                         Console.WriteLine("Not enough parameters");
                     break;
@@ -213,7 +232,7 @@ namespace grapeFruitRebuild
 
                 case "system":
                     Console.WriteLine("Available commands in \"system\" category:\n");
-                    Console.WriteLine("help/commands - shows command list");
+                    Console.WriteLine("help/commands <category> - shows command list in category");
                     Console.WriteLine("echo <message> - prints to screen");
                     Console.WriteLine("clear - clears screen");
                     Console.WriteLine("time - shows current time (RTC)");
@@ -235,9 +254,9 @@ namespace grapeFruitRebuild
                     Console.WriteLine("Available commands in \"fs\" category:\n");
                     Console.WriteLine("ls/dir - list directory contents");
                     Console.WriteLine("la - verbose listing of directory contents");
-                    Console.WriteLine("rm - remove file");
+                    Console.WriteLine("rm - remove file or directory (-d) recursively (-r)");
                     Console.WriteLine("touch <filename> - create empty file with specified name");
-                    Console.WriteLine("cat <filename> - print file contents");
+                    Console.WriteLine("cat <filename> - read file contents to screen");
                     Console.WriteLine("mkdir/md <name> - creates directory with name");
                     Console.WriteLine("copy/cp <source> <target> - copies file from source to target (if source exists)");
                     Console.WriteLine("move/mv <source> <target> - moves file from source to target (if source exists)");
@@ -247,7 +266,8 @@ namespace grapeFruitRebuild
 
                 case "debug":
                     Console.WriteLine("throwex - throws test exception");
-                    //Console.WriteLine("keytest - test keyboard keycodes");
+                    Console.WriteLine("env - Lists environment variables");
+                    Console.WriteLine("envedit  - Environment variable editor");
                     break;
             }
         }
@@ -271,20 +291,14 @@ namespace grapeFruitRebuild
 
         static void Shutdown()
         {
-            //choice
-            if (Choice())
-            {
+            if(Choice())
                 Cosmos.System.Power.Shutdown();
-            }
         }
 
         static void Reboot()
         {
-            //choice
-            if (Choice())
-            {
+            if(Choice())
                 Cosmos.System.Power.Reboot();
-            }
         }
 
         static bool Choice()

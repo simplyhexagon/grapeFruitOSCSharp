@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using Cosmos.HAL.BlockDevice;
 
-namespace grapeFruitRebuild.Filesystem
+namespace grapeFruitRebuild
 {
     public class FS
     {
@@ -44,7 +44,7 @@ namespace grapeFruitRebuild.Filesystem
                 if (Directory.Exists(path))
                 {
                     string[] filePaths = Directory.GetFiles(path);
-                    Console.WriteLine("\nDirectory listing of {0}", path);
+                    Console.WriteLine("\nDirectory listing of " + path);
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     foreach (var d in Directory.GetDirectories(path))
                     {
@@ -69,7 +69,7 @@ namespace grapeFruitRebuild.Filesystem
                 {
                     Console.Write("Directory ");
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("\"{0}\"", path);
+                    Console.Write("\"" + path + "\"");
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine(" not found!");
                 }
@@ -79,7 +79,6 @@ namespace grapeFruitRebuild.Filesystem
 
         public static void VerboseList(string path = "")
         {
-
             if(Globals.vFS != null) 
             {
                 if(path == "")
@@ -91,9 +90,10 @@ namespace grapeFruitRebuild.Filesystem
 
                 if (Directory.Exists(path))
                 {
-                    string[] filePaths = Directory.GetFiles(path);
-                    Console.WriteLine("\nVerbose listing of {0}", path);
-                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    //string[] filePaths = Directory.GetFiles(path);
+                    Console.WriteLine("\nVerbose listing of " + path);
+                    Console.WriteLine("\ntype\t\tname\tsize");
+                    Console.ForegroundColor = ConsoleColor.Yellow;   
                     foreach (var d in Directory.GetDirectories(path))
                     {
                         var dir = new DirectoryInfo(d);
@@ -108,6 +108,7 @@ namespace grapeFruitRebuild.Filesystem
 
                         Console.Write("\n");
                     }
+                    
 
                     Console.ForegroundColor = ConsoleColor.Blue;
 
@@ -129,13 +130,13 @@ namespace grapeFruitRebuild.Filesystem
                         Console.Write("\n");
                     }
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("\nTotal: " + $"{Globals.drive.TotalSize}" + " b / Free: " + $"{Globals.drive.AvailableFreeSpace}" + " b\n");
+                    Console.WriteLine("\nTotal: " + Globals.drive.TotalSize + " b / Free: " + Globals.drive.AvailableFreeSpace + " b\n");
                 }
                 else
                 {
                     Console.Write("Directory ");
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("\"{0}\"", path);
+                    Console.Write("\"" + path + "\"");
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine(" not found!");
                 }
@@ -227,36 +228,70 @@ namespace grapeFruitRebuild.Filesystem
                 Logger.Log(2, "FS.Chdir: Virtual Filesystem is not initialised!");
             else
             {
-                if (path == "..")
+                try
                 {
-                    string[] splitpath = Globals.workingdir.Split(@"\");
+                    switch (path)
+                    {
+                        case "..":
+                            string[] splitpath = Globals.workingdir.Split(@"\");
 
-                    //We can't do this:
-                    //splitpath = splitpath.SkipLast(1).ToArray();
-                    //so instead we'll convert it by hand
-                    List<string> temp = new();
-                    for (int i = 0; i < splitpath.Length - 2; i++)
-                        temp.Add(splitpath[i]);
+                            //We can't do this:
+                            //splitpath = splitpath.SkipLast(1).ToArray();
+                            //so instead we'll convert it by hand
+                            List<string> temp = new();
+                            for (int i = 0; i < splitpath.Length - 2; i++)
+                                temp.Add(splitpath[i]);
 
-                    Globals.workingdir = "";
-                    for (int i = 0; i < temp.Count; i++)
-                        Globals.workingdir += temp[i] + "\\";
+                            Globals.workingdir = "";
+                            for (int i = 0; i < temp.Count; i++)
+                                Globals.workingdir += temp[i] + "\\";
 
-                    //Very "hack-like" solution but it's almost 12am, I'll fix it later
+                            //Very "hack-like" solution but it's almost 12am, I'll fix it later
+                            break;
+
+                        case "$OLDPWD":
+                        case "-":
+                            //Check if we can even go back to that directory
+                            if (Directory.Exists(Globals.oldpwd))
+                            {
+                                //Using a "tuple" to swap values, as suggested by VS
+                                (Globals.oldpwd, Globals.workingdir) = (Globals.workingdir, Globals.oldpwd);
+                            }
+                            else
+                                Console.WriteLine("FS.Chdir: Directory does not exist!");
+                            break;
+                        default:
+                            path = path.Contains(@":\") ? path : Globals.workingdir + path + '\\';
+
+                            if (Directory.Exists(path))
+                            {
+                                Globals.oldpwd = Globals.workingdir;
+                                Globals.workingdir = path;
+                            }
+                            else
+                            {
+                                //Ensuring the user cannot go to invalid path
+                                Globals.oldpwd = Globals.workingdir;
+
+                                //Telling user about wrong path
+                                Console.Write("Directory ");
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.Write("\"" + path + "\"");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                Console.WriteLine(" not found!");
+                            }
+                            break;
+                    }
                 }
-                else if (!path.Contains(@":\"))
+                catch (Exception e)
                 {
-                    Globals.workingdir += path + "\\";
-                }
-                else
-                {
-                    Globals.workingdir = path;
+                    ErrorScreen.SpecifiedError(e);
                 }
             }
 
         }
-
-        public static void Remove(string path)
+        //Reworked function to support -d and -r
+        public static void Remove(List<string> args)
         {
             if (Globals.vFS == null)
             {
@@ -264,13 +299,68 @@ namespace grapeFruitRebuild.Filesystem
             }
             else
             {
-                if (!path.Contains(@":\"))
-                    path = Globals.workingdir + path;
+                string path;
+                //First, check if params starts with -d or -r
+                if (args[1] == "-d")
+                {
+                    path = args[2];
+                    if (!path.Contains(@":\"))
+                        path = Globals.workingdir + path;
 
-                if (File.Exists(path))
-                    File.Delete(path);
+                    //Check if path is directory
+                    if (!Directory.Exists(path) && File.Exists(path))
+                    {
+                        Console.WriteLine("FS.Remove: Target is a file");
+                        return;
+                    }
+
+                    //Check if directory is empty
+                    if (Directory.Exists(path) && Directory.GetDirectories(path) == Array.Empty<string>() && Directory.GetFiles(path) == Array.Empty<string>())
+                        Directory.Delete(path, false);
+                    else
+                    {
+                        Console.WriteLine("FS.Remove: Directory not empty");
+                        return;
+                    }
+
+                }
+                if (args[1] == "-r")
+                {
+                    path = args[2];
+                    if (!path.Contains(@":\"))
+                        path = Globals.workingdir + path;
+
+                    //Check if path is directory
+                    if (!Directory.Exists(path) && File.Exists(path))
+                    {
+                        Console.WriteLine("FS.Remove: Target is a file");
+                        return;
+                    }
+
+                    if (Directory.Exists(path))
+                        Directory.Delete(path, true);
+                }
                 else
-                    Console.WriteLine("FS.Remove: File does not exist");
+                {
+                    path = args[1];
+
+                    if (!path.Contains(@":\"))
+                        path = Globals.workingdir + path;
+
+                    //Check if path is a file
+                    if (Directory.Exists(path) && !File.Exists(path))
+                    {
+                        Console.WriteLine("FS.Remove: Target is a directory");
+                        return;
+                    }
+                    else
+                    {
+                        if (File.Exists(path))
+                            File.Delete(path);
+                        else
+                            Console.WriteLine("FS.Remove: File does not exist");
+                    }
+                }
             }
         }
 
