@@ -8,7 +8,7 @@ namespace grapeFruitRebuild
     public class Command
     {
         static string[] splitpwd = { };
-        public static void Main() 
+        public static void Main()
         {
             //Making the prompt pretty
             splitpwd = Globals.workingdir.Split("\\");
@@ -206,6 +206,10 @@ namespace grapeFruitRebuild
                         Console.WriteLine("Not enough parameters");
                     break;
 
+                case "debugmenu":
+                    debugmenu.main();
+                    break;
+
                 default:
                     Console.WriteLine("> unknown command");
                     break;
@@ -268,6 +272,7 @@ namespace grapeFruitRebuild
                     Console.WriteLine("throwex - throws test exception");
                     Console.WriteLine("env - Lists environment variables");
                     Console.WriteLine("envedit  - Environment variable editor");
+                    Console.WriteLine("debugmenu - Launch debug menu");
                     break;
             }
         }
@@ -291,57 +296,52 @@ namespace grapeFruitRebuild
 
         static void Shutdown()
         {
-            if(Choice())
+            if (Choice())
                 Cosmos.System.Power.Shutdown();
         }
 
         static void Reboot()
         {
-            if(Choice())
+            if (Choice())
                 Cosmos.System.Power.Reboot();
         }
 
-        static bool Choice()
+        static bool Choice(bool primaryYes=true)
         {
-        redochoice:
-            Console.Write("Are you sure? (Y/n)");
-            if (!Globals.swapYZ)
-            {
-                switch (Console.ReadKey().Key)
-                {
+            redochoice:
 
-                    case ConsoleKey.Enter:
-                    case ConsoleKey.Y:
-                        return true;
-
-                    case ConsoleKey.N:
-                        Console.Write('\n');
-                        return false;
-
-                    default:
-                        Console.Write('\n');
-                        goto redochoice;
-                }
-            }
+            if (primaryYes)
+                Console.Write("Are you sure? (Y/n)");
             else
+                Console.Write("Are you sure? (y/N)");
+
+            switch (Console.ReadKey().Key)
             {
-                switch (Console.ReadKey().Key)
-                {
-
-                    case ConsoleKey.Enter:
-                    case ConsoleKey.Z:
+                case ConsoleKey.Enter:
+                    Console.Write('\n');
+                    if (primaryYes)
                         return true;
-
-                    case ConsoleKey.N:
-                        Console.Write('\n');
+                    else 
                         return false;
-
-                    default:
-                        Console.Write('\n');
+                case ConsoleKey.Y:
+                    if (!Globals.swapYZ)
+                        return true;
+                    else
                         goto redochoice;
-                }
+                case ConsoleKey.N:
+                    Console.Write('\n');
+                    return false;
+
+                case ConsoleKey.Z:
+                    if (Globals.swapYZ)
+                        return true;
+                    else
+                        goto redochoice;
+
+                default:
+                    Console.Write('\n');
+                    goto redochoice;
             }
         }
-
     }
 }

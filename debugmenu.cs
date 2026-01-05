@@ -22,7 +22,7 @@ namespace grapeFruitRebuild
             Console.WriteLine("Available commands: env, sysinfo, vdevs, log, exit");
             do
             {
-                Console.Write("> ");
+                Console.Write("dbg > ");
                 input = Console.ReadLine();
                 switch (input)
                 {
@@ -80,14 +80,12 @@ namespace grapeFruitRebuild
             Console.WriteLine("MAC: " + Globals.nic.MACAddress);
             Console.WriteLine("Card Type: " + Globals.nic.CardType);
 
-            Console.Write("\nContinue . . .");
-            Console.ReadKey();
             Console.Write('\n');
         }
         private static void log()
         {
             byte type = 0;
-            Console.Write("\nType (int): ");
+            Console.Write("\nType (int, 1-4): ");
             type = Convert.ToByte(Console.ReadLine());
             string msg = "";
             Console.Write("msg? (str): ");

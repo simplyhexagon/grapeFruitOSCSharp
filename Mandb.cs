@@ -155,6 +155,11 @@ namespace grapeFruitRebuild
                     description = "Remove file OR directory at specified path\n-r: delete directory recursively\n-d: delete directory if it's empty";
                     break;
 
+                case "debugmenu":
+                    usage = "debugmenu";
+                    description = "Start the system's debug menu";
+                    break;
+
                 //case "desktop":
                 //    Console.WriteLine("Usage: desktop");
                 //    Console.WriteLine("Launches Desktop Mode (IN DEVELOPMENT!)");

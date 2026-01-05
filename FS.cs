@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Cosmos.HAL.BlockDevice;
+using Cosmos.System.FileSystem;
 
 namespace grapeFruitRebuild
 {
@@ -28,6 +29,40 @@ namespace grapeFruitRebuild
             }
 
         }
+        //For future use
+        /*public static void ListBlockDevs()
+        {
+            //lsblk
+            if (Globals.vFS != null)
+            {
+                Console.WriteLine("NAME\t\tSIZE\t\tTYPE\tMOUNT");
+                List<Disk> vfsDisks = Globals.vFS.GetDisks();
+                Disk disk = null;
+                string diskType = "";
+                for(short i = 0; i < vfsDisks.Count; i++)
+                {
+                    //Get all the data of said disk
+                    disk = vfsDisks[i];
+
+                    //Write disk data first
+                    //Name
+                    Console.Write("dev" + i);
+                    //Size
+                    Console.Write("\t\t");
+                    Console.Write(disk.Size);
+                    //Type
+                    Console.Write("\t\t");
+                    //Format internal string
+                    diskType = disk.GetType().ToString().Substring(6).ToUpper();
+                    Console.Write("\t"+ diskType + "\n");
+                   
+                }
+            }
+            else
+            {
+                Logger.Log(2, "Virtual Filesystem not initialised");
+            }
+        }*/
         public static void List(string path = "")
         {
             if (Globals.vFS == null)
