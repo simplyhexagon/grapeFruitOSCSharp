@@ -33,29 +33,20 @@ namespace grapeFruitRebuild
                 }
                 else
                 {
-                    //Checking for file
-                    if (fileName.Contains(@":\"))
-                    {
-                        //Absolute path, don't need pwd from Globals
-                        if (File.Exists(fileName))
-                            text = LoadFile(fileName);
-                        else
-                        {
-                            //File does not exist, we'll create it later
-                            text.Add("");
-                        }
-                    }
-                    else
+
+                    //Checking for absolute path
+                    if (!fileName.Contains(@":\"))
                     {
                         fileName = Globals.workingdir + fileName;
-                        //Relative path
-                        if (File.Exists(fileName))
-                            text = LoadFile(fileName);
-                        else
-                        {
-                            //File does not exist, we'll create it later
-                            text.Add("");
-                        }
+                    }
+
+                    //Checking for file
+                    if (File.Exists(fileName))
+                        text = LoadFile(fileName);
+                    else
+                    {
+                        //File does not exist, we'll create it later
+                        text.Add("");
                     }
                 }
 

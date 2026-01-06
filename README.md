@@ -16,7 +16,3 @@ You can find the older code in the `old` directory.
 Please note that after porting over older functionality, this folder will be removed.
 
 Please also note that due to unknown reasons, the OS might hang when performing operations on the filesystem.
-
-### Known bugs
-- When saving a file in `nano` without an extension, the system will report a critical failure, then create a file with the extension of the last 2 characters of the given filename (possible FAT32 limitation)
-- The `la` command can crash the system if the `ls` command hasn't been used beforehand (cause unknown)
