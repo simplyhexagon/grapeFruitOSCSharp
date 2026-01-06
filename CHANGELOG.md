@@ -1,6 +1,15 @@
 ﻿# GrapeFruit OS - Powered by Cosmos
 ## Changelog
 
+### 2026-01-06 | 0.16.3
+- Minor cleanup in `nano` code
+- Brought back some networking commands from the old code
+- Rephrased `TODO` for other actions in the future
+
+### 2026-01-05 | 0.16.2
+- Minor rework on `choice`, if needed, it can now default to "No" instead of "Yes" (y/N instead of Y/n)
+- Added `debugmenu`
+
 ### 2026-01-02 | 0.16.1
 - Cleaned up the "mandb" a little
     - every switch now sets 2 variables, instead of individual console writelines

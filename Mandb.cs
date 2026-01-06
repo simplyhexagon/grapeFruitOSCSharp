@@ -108,42 +108,35 @@ namespace grapeFruitRebuild
                     description = "Moves source file to target path";
                     break;
 
-                //case "gfdisk":
-                //    Console.WriteLine("Usage: gfdisk");
-                //    Console.WriteLine("Launches GrapeFruit Disk Utility");
-                //    break;
+                case "ping":
+                    usage = "ping <IPv4 address>";
+                    description = "Sends 4 ICMP echo requests to the specified address\nExample ping 1.1.1.1";
+                    break;
 
-                //case "ping":
-                //    Console.WriteLine("Usage: ping <IPv4 address>");
-                //    Console.WriteLine("Example: ping 1.1.1.1");
-                //    Console.WriteLine("Sends 4 ICMP echo requests to the specified address");
-                //    break;
+                case "dnsping":
+                    usage = "dnsping <domain name>";
+                    description = "Sends 4 ICMP echo requests to the\nresolved address of the specified domain name\nExample: dnsping archlinux.org";
+                    break;
 
-                //case "dnsping":
-                //    Console.WriteLine("Usage: dnsping <Domain name>");
-                //    Console.WriteLine("Example: dnsping archlinux.org");
-                //    Console.WriteLine("Sends 4 ICMP echo requests to the specified address");
-                //    break;
+                case "resolvedns":
+                    usage = "resolvedns <domain name>";
+                    description = "Resolves the IPv4 address of the specified domain name and prints it to the console";
+                    break;
 
-                //case "trydhcp":
-                //    Console.WriteLine("Usage: trydhcp");
-                //    Console.WriteLine("Attempts to reset DHCP configuration, or set it, if previously unsuccesful");
-                //    break;
+                case "ip":
+                    usage = "ip";
+                    description = "Prints current IP address to console";
+                    break;
+
+                case "nwif":
+                    usage = "nwif";
+                    description = "Prints information about network interface to console";
+                    break;
 
                 case "whatis":
                     usage = "whatis <command>";
                     description = "Outputs information about specified command";
                     break;
-
-                //case "kblayout":
-                //    Console.WriteLine("Usage: kblayout");
-                //    Console.WriteLine("Prompts user to set keyboard layout from displayed list");
-                //    break;
-
-                //case "resolvedns":
-                //    Console.WriteLine("Usage: resolvedns <domain name>");
-                //    Console.WriteLine("Resolve IPv4 address of domain manually (could be useful)");
-                //    break;
 
                 case "nano":
                     usage = "nano [<filepath>]";
@@ -159,16 +152,6 @@ namespace grapeFruitRebuild
                     usage = "debugmenu";
                     description = "Start the system's debug menu";
                     break;
-
-                //case "desktop":
-                //    Console.WriteLine("Usage: desktop");
-                //    Console.WriteLine("Launches Desktop Mode (IN DEVELOPMENT!)");
-                //    break;
-
-                //case "keytest":
-                //    Console.WriteLine("Usage: keytest");
-                //    Console.WriteLine("Launches keycode testing program");
-                //    break;
 
                 default:
                     valid = false;
